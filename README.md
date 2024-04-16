@@ -1,36 +1,32 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+## NFTのTransferをERC2771のメタトランザクションで実行するサンプル
 
-First, run the development server:
+### やってること
+- Web3Authによるソーシャルログイン
+- ログインしたウォレットが保有するNFTの一覧表示 (.envで指定したコントラクトアドレスのNFTが対象)
+- 保有するNFTを外部へのTransferフォームの作成
+- Web3Auth Providerによる署名実行
+- 署名情報を受け渡したTransfer APIのコール
+- Transfer API内で運営側のウォレットの秘密鍵を用い、Forwarderコントラクトに対してトランザクションを実行
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+- Web3Authでエンドユーザが新規ウォレットを発行し、そこにNFTを配布
+- エンドユーザのウォレットにはネイティブトークンが無いため、配布されたNFTを外部にTransfer出来ない
+- この問題を解決するために、NFTのコントラクトにERC2771を継承させ、運営側でGAS代を肩代わりしてTransferを実行できるようにする
+
+### 前提
+- ネットワークはSepolia
+- NFTのコントラクトはERC721規格に則っていればOK
+- Trusted ForwarderコントラクトはOpenZeppelinのMinimal Forwarderを想定
+
+# 動かし方
+.env.exampleを参考に、.envファイルを作成する
+```
+NEXT_PUBLIC_WEB3AUTH_CLIENT_ID=Web3AuthのクライアントID
+NEXT_PUBLIC_ALCHEMY_API_KEY=AlchemyのAPIキー (Sepoolia)
+ADMIN_PRIVATE_KEY=トランザクションを実際に実行するウォレットの秘密鍵
+NEXT_PUBLIC_FORWARDER_CONTRACT_ADDRESS=フォワーダーのコントラクトアドレス
+NEXT_PUBLIC_ERC721_CONTRACT_ADDRESS=NFTのコントラクトアドレス
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+その後に`yarn install`と`yarn dev`で実行
