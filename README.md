@@ -20,7 +20,7 @@
 - Trusted ForwarderコントラクトはOpenZeppelinのMinimal Forwarderを想定
 - Web3Authでログインしたウォレットアドレス宛にNFTをTransferしておくこと
 
-# 動かし方
+## 動かし方
 .env.exampleを参考に、.envファイルを作成する
 ```
 NEXT_PUBLIC_WEB3AUTH_CLIENT_ID=Web3AuthのクライアントID
