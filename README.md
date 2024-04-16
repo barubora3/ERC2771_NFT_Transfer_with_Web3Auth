@@ -18,6 +18,7 @@
 - ネットワークはSepolia
 - NFTのコントラクトはERC721規格に則っていればOK
 - Trusted ForwarderコントラクトはOpenZeppelinのMinimal Forwarderを想定
+- Web3Authでログインしたウォレットアドレス宛にNFTをTransferしておくこと
 
 # 動かし方
 .env.exampleを参考に、.envファイルを作成する
