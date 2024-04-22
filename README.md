@@ -17,11 +17,12 @@
 ### 前提
 - ネットワークはSepolia
 - NFTのコントラクトはERC721規格に則っていればOK
-- Trusted ForwarderコントラクトはOpenZeppelinのMinimal Forwarderを想定
+- Trusted ForwarderコントラクトはOpenZeppelinのERC2771Forwarderを想定
 - Web3Authでログインしたウォレットアドレス宛にNFTをTransferしておくこと
 
 ## 動かし方
-.env.exampleを参考に、.envファイルを作成する
+1. `git clone https://github.com/barubora3/ERC2771_NFT_Transfer_with_Web3Auth.git;yarn install`
+2. .env.exampleを参考に、.envファイルを作成する
 ```
 NEXT_PUBLIC_WEB3AUTH_CLIENT_ID=Web3AuthのクライアントID
 NEXT_PUBLIC_ALCHEMY_API_KEY=AlchemyのAPIキー (Sepoolia)
@@ -29,5 +30,10 @@ ADMIN_PRIVATE_KEY=トランザクションを実際に実行するウォレッ�
 NEXT_PUBLIC_FORWARDER_CONTRACT_ADDRESS=フォワーダーのコントラクトアドレス
 NEXT_PUBLIC_ERC721_CONTRACT_ADDRESS=NFTのコントラクトアドレス
 ```
-
-その後に`yarn install`と`yarn dev`で実行
+3. `yarn dev`
+4. `http://localhost:3000`にアクセス
+5. Web3Authにてログインする
+6. ウォレットアドレスが表示される
+7. 環境変数に指定したNFTを6.宛にNFTを送付
+8. http://localhost:3000のフロントエンドにNFTのトークンIDが表示されるようになる
+9. フロントから送付先のアドレス、トークンIDを指定してtransferボタンをクリックする
